@@ -4,6 +4,7 @@ import content from './data/content.json';
 import {SyncPlayer, escapeHtml as esc, assetUrl, type CaseStudy} from './player';
 import {modelIcon, harnessIcon} from './icons';
 import {groupTasks} from './tasks';
+import {renderPhysicalEvidence} from './evidence';
 const $=<T extends Element = HTMLElement>(s:string)=>document.querySelector<T>(s)!;
 async function initializeSite(){
 const response=await fetch(assetUrl('data/cases.json'),{cache:'no-cache'});
@@ -67,18 +68,18 @@ const overviewVideo=$<HTMLVideoElement>('#overview-player');
 overviewVideo.addEventListener('play',()=>modalPlayer?.pause());
 document.addEventListener('visibilitychange',()=>{if(document.hidden)overviewVideo.pause();});
 function openCase(id:string,trigger:HTMLElement){
-  const c=tasks.find(x=>x.aliases.includes(id));if(!c)return;opener=trigger;modalPlayer?.dispose();
+  const c=tasks.find(x=>x.aliases.includes(id));if(!c)return;opener=trigger;modalPlayer?.dispose();modalPlayer=undefined;
   overviewVideo.pause();
- $('#dialog-title').textContent=c.title;$('#dialog-domain').textContent=`${domainLabels[c.domain]} / Task comparison`;
- $('#dialog-content').innerHTML='<div id="detail-player"></div>';
  const evidenceStudy=trigger.closest('#failure-list')?cases.find(x=>x.id===id):undefined;
- modalPlayer=new SyncPlayer($('#detail-player'),c,results,evidenceStudy?.models[0]);
- dialog.showModal();document.body.classList.add('modal-open');dialog.scrollTop=0;
- // Only the dedicated failure-case entry opens its exact artifact's evidence.
+ $('#dialog-title').textContent=evidenceStudy?.title??c.title;$('#dialog-domain').textContent=`${domainLabels[c.domain]} / ${evidenceStudy?'Physical verification':'Task comparison'}`;
+ dialog.dataset.view=evidenceStudy?'physical':'comparison';
  if(evidenceStudy){
-  const card=dialog.querySelector<HTMLElement>(`[data-artifact="${evidenceStudy.models[0].sha256}"]`);
-  if(card){const details=card.querySelector('details');if(details)details.open=true;card.scrollIntoView({block:'start'});}
+  $('#dialog-content').innerHTML=renderPhysicalEvidence(evidenceStudy);
+ }else{
+  $('#dialog-content').innerHTML='<div id="detail-player"></div>';
+  modalPlayer=new SyncPlayer($('#detail-player'),c,results);
  }
+ dialog.showModal();document.body.classList.add('modal-open');$('#dialog-content').scrollTop=0;
 }
 function cleanupDialog(){modalPlayer?.dispose();modalPlayer=undefined;document.body.classList.remove('modal-open');opener?.focus({preventScroll:true});}
 $('#close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',cleanupDialog);

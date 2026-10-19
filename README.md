@@ -6,6 +6,8 @@ The public project website for **PhysCodeGym: Benchmarking Coding Agents for Phy
 
 The page includes the reconstruction overview video, all 156 benchmark tasks, nine leaderboard configurations, and model reconstruction comparisons. The main configurations contain 1,179 available reconstruction videos; 225 task/configuration slots have no submitted video. One additional archived reconstruction is retained.
 
+The six physical failure entries open a focused physical-check view with the finding, original-condition validity, and measurement evidence. Video comparisons remain in the ordinary task gallery. Dialog titles and close controls stay visible while their content scrolls.
+
 ## Publishing updates
 
 Changes pushed to `main` are automatically checked, built, and published by [the GitHub Pages workflow](.github/workflows/pages.yml). Deployment progress is shown in the repository's **Actions** tab. GitHub Pages must use **GitHub Actions** as its source in **Settings → Pages**.
@@ -46,6 +48,7 @@ The overview, posters, and selected showcase videos are included in `public/`. O
 | `index.html` | Page structure and prose |
 | `src/main.ts` | Filters, gallery, leaderboard, and dialogs |
 | `src/player.ts` | Synchronized video playback |
+| `src/evidence.ts` | Focused physical findings, validity, and evidence images |
 | `src/style.css`, `src/tokens.css` | Layout and appearance |
 | `src/data/content.json` | Authors, affiliations, metrics, and citation |
 | `src/data/cases.json`, `public/data/cases.json` | Matching copies of the task and video catalog |
