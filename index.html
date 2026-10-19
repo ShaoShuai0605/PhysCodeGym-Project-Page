@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="PhysCodeGym: Benchmarking Coding Agents for Physically Verifiable 4D Reconstruction. From video reconstruction to verifiable physics: 156 tasks, six metrics, and counterfactual checks." />
+  <title>PhysCodeGym — Physically Verifiable 4D Reconstruction</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
+  <link rel="icon" href="./favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav wrap" aria-label="Main navigation"><a class="brand" href="#main"><img src="./brand/physcodegym-wordmark.png" width="2126" height="666" alt="PhysCodeGym" /></a><div class="nav-links"><a href="#overview-video">Overview</a><a href="#task">Benchmark</a><a href="#results">Leaderboard</a><a href="#analysis">Analysis</a><a href="#citation">BibTeX</a></div></nav></header>
+<main id="main">
+<section class="intro wrap" aria-labelledby="paper-title">
+  <h1 id="paper-title">
+    <span class="project-brand"><img class="project-icon" src="./brand/physcodegym-icon.png" width="1295" height="1179" alt="" fetchpriority="high" /><img class="project-wordmark" src="./brand/physcodegym-wordmark.png" width="2126" height="666" alt="PhysCodeGym" fetchpriority="high" /></span>
+    <span class="paper-title">Benchmarking Coding Agents for <br class="title-break">Physically Verifiable 4D Reconstruction</span>
+  </h1>
+  <div class="authors" id="authors-content"></div>
+  <div class="resource-pills"><a href="https://arxiv.org/abs/2610.17288" target="_blank" rel="noopener"><img class="resource-icon" src="./icons/resources/paper.svg" width="18" height="18" alt="" aria-hidden="true" />Paper</a><a href="https://github.com/ShaoShuai0605/PhysCodeGym" target="_blank" rel="noopener"><img class="resource-icon" src="./icons/resources/github.svg" width="18" height="18" alt="" aria-hidden="true" />Code</a><a href="https://huggingface.co/datasets/ShaoShuai0605/PhysCodeGym" target="_blank" rel="noopener"><img class="resource-icon" src="./icons/resources/dataset.svg" width="18" height="18" alt="" aria-hidden="true" />Dataset</a><a href="https://github.com/ShaoShuai0605/PhysCodeGym/blob/main/docs/evaluation.md" target="_blank" rel="noopener"><img class="resource-icon" src="./icons/resources/evaluation.svg" width="18" height="18" alt="" aria-hidden="true" />Evaluation</a></div>
+</section>
+
+<section id="overview" class="project-overview wrap" aria-labelledby="overview-heading">
+  <div class="overview-copy">
+    <h2 id="overview-heading"><em>Can coding agents reconstruct the physics behind a video?</em></h2>
+    <p>We introduce <strong>PhysCodeGym</strong>, a benchmark of <strong>156 video-to-program tasks</strong> spanning rigid-body, liquid, deformable, and wind-driven motion. Given a reference video, agents write, execute, and refine <strong>Blender programs</strong> to reconstruct the scene and its dynamics. We evaluate visual fidelity and <strong class="research-emphasis">physical validity</strong> through six metrics, combining rendered-video assessment with program inspection, native-scene measurements, and <strong class="research-emphasis">counterfactual tests</strong>.</p>
+  </div>
+  <figure id="overview-video" class="project-video">
+    <video id="overview-player" controls muted loop playsinline preload="none" poster="./media/overview.jpg" aria-label="GPT-6-Astra reconstruction overview">
+      <source src="./media/overview.mp4" type="video/mp4" />
+      <a href="./media/overview.mp4">Watch the reconstruction overview</a>
+    </video>
+    <figcaption>GPT-6-Astra reconstructions across 144 tasks, from four examples to a full scene mosaic.</figcaption>
+  </figure>
+<div id="protocol" class="overview-pipeline">
+<figure class="pipeline-figure"><img src="./media/figures/physcodegym-pipeline.png" width="2997" height="1648" alt="PhysCodeGym pipeline: a reference video defines the task; a coding agent observes, codes, runs, and compares Blender previews; independent evaluation checks objects, events, image and motion metrics, and physical validity through native-scene inspection and controlled re-simulation." loading="lazy" /><figcaption><strong>Reconstruction and verification pipeline.</strong> A reference video defines the task. The coding agent iterates between observing, coding, running, and comparing rendered previews before submitting its scene program. Independent evaluation combines visual and motion metrics with rubric judgments, native-scene inspection, and controlled re-simulation. Visual and physical scores are reported separately.</figcaption></figure>
+</div>
+</section>
+
+<section id="task" class="task-section"><div class="wrap">
+<div class="section-head"><div><h2>Benchmark</h2></div></div><p class="section-intro">PhysCodeGym contains <strong>156 video-to-program tasks</strong> across rigid-body, liquid, deformable, and wind-driven motion. Each reference is eight seconds long at 30 FPS. Agents submit a runnable Blender program and its native scene; evaluation measures both the rendered video and the mechanisms that produce it.</p><p class="section-intro">The public release includes task-specific object, event, and physical-validity rubrics. <strong>43 tasks include counterfactual checks</strong> within physical validity.</p><div class="scene-browser-heading"><h3 id="browse-scenes-title">Browse scenes</h3><button id="all-scenes" class="button" aria-controls="case-grid" aria-pressed="true">All scenes</button></div><div id="domain-cards" class="domain-cards" role="group" aria-labelledby="browse-scenes-title"></div>
+
+<div id="explore" class="benchmark-gallery" role="region" aria-label="Benchmark task reconstructions">
+<div class="gallery-viewbar"><div class="gallery-caption"><span id="case-count" aria-live="polite"></span></div><span class="gallery-reference-label">Reference previews</span></div><p class="gallery-note">One reference per task. Open a task to view model reconstructions; videos not yet available are marked as pending.</p><div id="case-grid" class="case-grid"></div><div class="gallery-more"><button id="gallery-more" class="button" aria-expanded="false">Show all tasks ↓</button></div><div class="empty-state" id="empty-state" hidden>No tasks available in this category.</div></div>
+<details class="evidence-details benchmark-failures"><summary>Six physical failure cases <span>＋</span></summary><div class="details-body"><p>All six reconstructions score <i>S</i><sub>obj</sub> = <i>S</i><sub>evt</sub> = 1, yet program inspection and scene measurements expose physical defects.</p><div id="failure-list" class="failure-list"></div></div></details>
+</div></section>
+
+<section id="results" class="results-section"><div class="wrap">
+<div class="section-head"><div><h2>Leaderboard</h2></div></div><p class="section-intro"><strong>GPT-6-Astra leads the nine evaluated configurations</strong> with an overall score of 0.663 (visual: 0.693; physical: 0.633). All nine score higher on objects than events. Motion remains difficult: the highest motion score is 0.324.</p><div class="results-toolbar"><span>Main table · 9 configurations · high effort</span><label>Sort by <select id="result-sort"><option value="overall">Overall S_tot</option><option value="visual">Visual S_vis</option><option value="physical">Physical S_phys</option><option value="object">Object</option><option value="event">Event</option><option value="motion">Motion</option></select></label></div><div class="table-scroll" tabindex="0" aria-label="Main results table; scroll horizontally"><table><caption class="sr-only">Six metrics and aggregates for nine model–harness configurations; higher is better</caption><thead><tr><th scope="col" class="rank-col">Rank</th><th scope="col" class="model-col">Model</th><th scope="col" class="harness-col">Harness</th><th scope="col">SSIM</th><th scope="col">LPIPS</th><th scope="col">Object</th><th scope="col" class="visual-col">S_vis</th><th scope="col">Event</th><th scope="col">Motion</th><th scope="col">Validity</th><th scope="col" class="physical-col">S_phys</th><th scope="col">S_tot ↑</th></tr></thead><tbody id="result-rows"></tbody></table></div><p class="fineprint">Source: current manuscript, Table 2. Values retain the paper’s displayed precision and lie in [0, 1]. LPIPS denotes clip(1 − distance, 0, 1).</p>
+<details class="evidence-details"><summary>Coverage and provisional physical scores <span>＋</span></summary><div class="details-body"><p>Each configuration targets 156 tasks. Missing artifacts receive zero on every metric. Repeated tasks use the latest run with a rendered artifact, not the highest-scoring run.</p><p>Provisional validity uses lower endpoints of rubric-score intervals. Technical gaps for existing artifacts are omitted; registered missing-artifact zeros remain. S_phys is computed per task, then averaged over the same available subset as validity. It cannot be reconstructed by averaging the differently covered Event, Motion, and Validity columns.</p><p>Model-level S_tot averages the displayed S_vis and S_phys. Equivalence to a six-metric mean requires identical averaging sets for all six metrics.</p></div></details><div class="analysis-note"><h3>Similar visual scores can hide different capabilities.</h3><p>GPT-6-Luna has a slightly higher visual score than GPT-5.6-Luna (0.505 vs. 0.500), but lower event (0.393 vs. 0.448) and motion scores (0.128 vs. 0.157). The component metrics reveal differences that a single rank conceals.</p></div>
+</div></section>
+
+
+
+<section id="analysis" class="failure-section"><div class="wrap">
+<div class="section-head"><h2>Analysis</h2></div>
+<p class="analysis-intro">We examine resource use, reasoning effort, and harness settings to understand what shapes reconstruction quality.</p>
+<div class="resource-study" aria-labelledby="resource-heading">
+<h3 id="resource-heading">Resource use and quality</h3>
+<div class="analysis-figures resource-figures">
+<figure class="analysis-figure">
+<img src="./media/figures/resource-cost.svg" width="2412" height="1280" alt="Figure 3a: overall reconstruction score versus estimated API cost per task on a logarithmic axis, with model labels and the Pareto frontier" loading="lazy" />
+<figcaption><h4>Estimated API cost</h4><p>GPT-5.6-Sol scores 0.570 at approximately $3.40 per task, while GPT-6-Astra reaches 0.663 at $11.57—3.4 times the cost. Both lie on the estimated-cost Pareto frontier.</p></figcaption>
+</figure>
+<figure class="analysis-figure">
+<img src="./media/figures/resource-tokens.svg" width="2412" height="1280" alt="Figure 3b: overall reconstruction score versus recorded tokens per task in millions on a logarithmic axis, with model labels and the Pareto frontier" loading="lazy" />
+<figcaption><h4>Recorded token use</h4><p>DeepSeek-V4.1-Flash uses 16.98M tokens per task, nearly three times GPT-5.6-Sol’s 5.70M, but scores 0.450 versus 0.570. Cumulative tokens include repeated context and do not directly measure effective reasoning.</p></figcaption>
+</figure>
+</div>
+</div>
+<div class="analysis-figures">
+<figure class="analysis-figure" id="effort-chart">
+<div class="analysis-figure-media"><img src="./media/figures/reasoning-effort.svg" width="1002" height="881" alt="Paper results for DeepSeek-V4.1-Flash at low, high, and max reasoning effort: visual metrics, physical metrics, and aggregate scores" loading="lazy" /></div>
+<figcaption><h3>Reasoning effort and task completion</h3><p>Under the same 3-hour and 20-launch limits, low effort leads overall (0.476), mainly through higher task completion. Among produced artifacts, max scores 0.547 versus low’s 0.527, revealing a completion–quality tradeoff.</p></figcaption>
+</figure>
+<figure class="analysis-figure" id="harness-chart">
+<div class="analysis-figure-media"><img src="./media/figures/cross-harness.svg" width="984" height="643" alt="Paper comparison of DeepSeek-V4.1-Flash at high effort in Claude Code and Codex across six metrics and aggregate scores" loading="lazy" /></div>
+<figcaption><h3>Harness and verification</h3><p>At high effort, Codex scores 0.479 overall versus Claude Code’s 0.450, with the largest gain in event reconstruction (0.550 vs. 0.446). Agent traces suggest that verification timing and budget allocation may contribute to this difference.</p></figcaption>
+</figure>
+</div>
+
+
+</div></section>
+
+<section id="faq" class="faq-section wrap" aria-labelledby="faq-title">
+<div class="section-head"><h2 id="faq-title">FAQ</h2></div>
+<details class="evidence-details">
+<summary>What does the agent reconstruct from a video? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>The agent writes an executable Blender program that builds the objects, materials, camera, and lighting, and sets physical properties, initial conditions, constraints, and forces. The submission includes the program and the native scene it generates. This makes the reconstruction runnable, inspectable, and available for re-simulation under changed conditions.</p></div>
+</details>
+<details class="evidence-details">
+<summary>How are physical parameters determined from a video? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>The reference scene’s source program and physical parameters are not provided. The agent chooses parameters from the visible appearance, motion, and interactions, then runs the scene, inspects previews, and revises its program; the benchmark does not prescribe a single parameter-estimation algorithm.</p><p>A single video does not uniquely identify every physical parameter. Equivalent implementations are accepted when they reproduce the observations and satisfy the task’s physical requirements; exact hidden geometry and true parameter values are not required.</p></div>
+</details>
+<details class="evidence-details">
+<summary>How is motion generated in the reconstructed scene? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>Core-object motion must arise from physics solvers, forces, constraints, and initial conditions. For example, dominoes should fall through successive collisions, rather than following a separately scripted falling trajectory for each piece. Explicitly modeled external actuators are allowed, provided that the objects they act on respond through physical interaction. Scripted core-object trajectories and forces with no counterpart in the reference, such as an attractor steering a ball along a prescribed path, do not satisfy this requirement.</p></div>
+</details>
+<details class="evidence-details">
+<summary>How do you check whether the reconstruction is physically valid? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>Each task has a manually annotated physical rubric specifying the permitted setup, actuation, and mechanisms to verify. A verification agent reads the program and native scene, identifies the relevant objects, and writes and executes Blender/Python probes to inspect how motion is produced and measure contact, support, and object states over time. Each judgment is supported by source references or measured evidence; rendered appearance alone is insufficient.</p></div>
+</details>
+<details class="evidence-details">
+<summary>What happens when the physical conditions are changed? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>For tasks with counterfactual checks, the verifier copies the scene, changes a specified force, contact relation, or initial condition, and re-simulates it against the unchanged baseline. For example, if a ball moves a target through collision, removing their contact while preserving the ball’s incoming motion should eliminate the target’s impact-induced response. The verifier confirms that the intervention takes effect and uses control scenes to check the measurement before judging whether the required physical dependence holds.</p></div>
+</details>
+<details class="evidence-details">
+<summary>Can a reconstruction look correct but still fail the physics checks? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>Yes. Scripted trajectories, hidden supports, or incorrect collision geometry can reproduce the reference frames while producing an invalid physical response. Even when object and event scores are high, program inspection and scene measurements can reveal these defects. Conversely, a scene with a valid physical mechanism may still miss the reference event, so visual fidelity, event reconstruction, and physical validity are assessed separately.</p></div>
+</details>
+<details class="evidence-details">
+<summary>How is reconstruction quality measured? <span aria-hidden="true">＋</span></summary>
+<div class="details-body"><p>Visual quality covers frame structure, perceptual similarity, and object correctness. Physical quality covers events, motion patterns, and physical validity. We report the component metrics alongside visual, physical, and overall scores to distinguish appearance mismatches from mechanism failures.</p><div class="metric-groups" id="metric-groups"></div><h3>How scores are combined</h3><code class="formula">S_vis = (SSIM + LPIPS + Object) / 3<br>S_phys = (Event + Motion + Validity) / 3<br>S_tot = (S_vis + S_phys) / 2</code><p>These formulas define the per-task aggregates. Model-level scores follow the coverage and provisional-score rules described below the leaderboard.</p><p>Events use three independent judgments and a majority vote per item. Failure of a task-defining key event caps the event score at zero. Counterfactual checks are criteria within physical validity, not a seventh metric.</p></div>
+</details>
+</section>
+
+<section id="citation" class="citation-section wrap" aria-labelledby="citation-title">
+  <div class="section-head"><h2 id="citation-title">BibTeX</h2><button id="copy-citation" class="button"><img class="resource-icon" src="./icons/resources/citation.svg" width="18" height="18" alt="" aria-hidden="true" /><span class="copy-label">Copy BibTeX</span></button></div>
+  <p class="fineprint">Based on the local manuscript. Public preprint identifier and publication metadata are pending.</p>
+  <pre><code id="bibtex"></code></pre>
+  <p id="copy-status" class="sr-only" role="status"></p>
+</section>
+</main><footer class="wrap footer"><a class="brand" href="#main"><img src="./brand/physcodegym-wordmark.png" width="2126" height="666" alt="PhysCodeGym" /></a><p>Physically Verifiable 4D Reconstruction</p><a href="#main">Back to top ↑</a></footer>
+
+<dialog id="case-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><div><span id="dialog-domain" class="eyebrow"></span><h2 id="dialog-title"></h2></div><button id="close-dialog" aria-label="Close case details">×</button></div><div id="dialog-content"></div></dialog>
+<script type="module" src="/src/main.ts"></script>
+</body></html>

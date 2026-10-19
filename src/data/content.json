@@ -1,0 +1,89 @@
+{
+  "authors": [
+    [
+      "Shuai Shao¹*†",
+      "Jinchen He¹*",
+      "Cunxin Fan¹*",
+      "Zihan Guo²³*‡",
+      "Shijian Wang⁴",
+      "Qihan Ren¹",
+      "Kangning Zhang¹"
+    ],
+    [
+      "Zunnan Xu⁵",
+      "Haoyuan Li²",
+      "Hao Wang⁶",
+      "Jianghao Lin¹‡",
+      "Weiwen Liu¹‡",
+      "Weinan Zhang¹‡"
+    ]
+  ],
+  "affiliations": [
+    "¹ Shanghai Jiao Tong University",
+    "² Sun Yat-sen University",
+    "³ Shanghai Innovation Institute",
+    "⁴ Southeast University",
+    "⁵ Nanyang Technological University",
+    "⁶ Carnegie Mellon University"
+  ],
+  "roles": [
+    {
+      "symbol": "*",
+      "text": "Equal contribution."
+    },
+    {
+      "symbol": "†",
+      "text": "Project lead."
+    },
+    {
+      "symbol": "‡",
+      "text": "Co-corresponding authors."
+    }
+  ],
+  "metrics": [
+    {
+      "group": "visual",
+      "label": "SSIM",
+      "name": "Structural similarity",
+      "description": "Per-frame structural and pixel-level similarity.",
+      "source": "Reference + render"
+    },
+    {
+      "group": "visual",
+      "label": "LPIPS",
+      "name": "Perceptual similarity",
+      "description": "AlexNet LPIPS distance converted to higher-is-better similarity.",
+      "source": "Reference + render"
+    },
+    {
+      "group": "visual",
+      "label": "Object",
+      "name": "Object accuracy",
+      "description": "Checks object categories, counts, appearance, and initial layout.",
+      "source": "Checklist + render"
+    },
+    {
+      "group": "physical",
+      "label": "Event",
+      "name": "Event completion",
+      "description": "Checks events, temporal order, and final states with three votes per item.",
+      "source": "Event annotations + render"
+    },
+    {
+      "group": "physical",
+      "label": "Motion",
+      "name": "Motion overlap",
+      "description": "Combines spatial and weighted IoU for motion regions and duration.",
+      "source": "Reference + render"
+    },
+    {
+      "group": "physical",
+      "label": "Validity",
+      "name": "Physical validity",
+      "description": "Inspects code and native states with task-specific probes and controlled interventions.",
+      "source": "Program + scene + probes"
+    }
+  ],
+  "bibtex": "@misc{shao2026physcodegym,\n  title = {PhysCodeGym: Benchmarking Coding Agents for Physically Verifiable 4D Reconstruction},\n  author = {Shuai Shao and Jinchen He and Cunxin Fan and Zihan Guo and Shijian Wang and Qihan Ren and Kangning Zhang and Zunnan Xu and Haoyuan Li and Hao Wang and Jianghao Lin and Weiwen Liu and Weinan Zhang},\n  year = {2026},\n  note = {Manuscript; public preprint identifier pending}\n}",
+  "equalContributionNote": "All four co-first authors agree that each may list their own name first when presenting this work."
+}
